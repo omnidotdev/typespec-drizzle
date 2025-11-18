@@ -39,6 +39,7 @@
 		"test": "bun test",
 		"release": "bun run build && changeset publish",
 		"prebuild": "rm -rf build",
+		"pretest": "bun run build",
 		"prepare": "husky"
 	},
 	"peerDependencies": {
