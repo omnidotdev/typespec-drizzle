@@ -2,6 +2,11 @@ load("ext://dotenv", "dotenv")
 dotenv()
 
 local_resource(
+  "install",
+  "bun install",
+)
+
+local_resource(
   "build",
   "bun run build",
   auto_init=False,
