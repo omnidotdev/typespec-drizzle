@@ -1,4 +1,5 @@
-import { EmitContext, emitFile, resolvePath } from "@typespec/compiler";
+import type { EmitContext } from "@typespec/compiler";
+import { emitFile, resolvePath } from "@typespec/compiler";
 
 /**
  * Entry point for the emitter.
@@ -6,11 +7,11 @@ import { EmitContext, emitFile, resolvePath } from "@typespec/compiler";
  * @see https://typespec.io/docs/extending-typespec/emitters-basics/#onemit
  */
 export const $onEmit = async (ctx: EmitContext) => {
-  // exit if `noEmit` is enabled
-  if (ctx.program.compilerOptions.noEmit) return;
+	// exit if `noEmit` is enabled
+	if (ctx.program.compilerOptions.noEmit) return;
 
-  await emitFile(ctx.program, {
-    path: resolvePath(ctx.emitterOutputDir, "output.txt"),
-    content: "Hello world\n",
-  });
+	await emitFile(ctx.program, {
+		path: resolvePath(ctx.emitterOutputDir, "output.txt"),
+		content: "Hello world\n",
+	});
 };
