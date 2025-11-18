@@ -11,7 +11,7 @@
 
 </div>
 
-A [TypeSpec](https://typespec.io) emitter that generates [Drizzle ORM](https://orm.drizzle.team) schema definitions and types from TypeSpec specifications.
+A [TypeSpec](https://typespec.io) emitter that generates [Drizzle ORM](https://orm.drizzle.team) schema definitions and types from TypeSpec specifications. Learn about TypeSpec emitters [here](https://typespec.io/docs/extending-typespec/emitters-basics).
 
 > [!IMPORTANT]
 > **Project Status:** 🚧 This project is **brand new**. Use at your own risk.
