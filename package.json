@@ -1,0 +1,30 @@
+{
+  "name": "@omnidotdev/typespec-drizzle-emitter",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "build/src/index.js",
+  "exports": {
+    ".": {
+      "types": "./build/src/index.d.ts",
+      "default": "./build/src/index.js"
+    },
+    "./testing": {
+      "types": "./build/src/testing/index.d.ts",
+      "default": "./build/src/testing/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "bun test"
+  },
+  "peerDependencies": {
+    "@typespec/compiler": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.2",
+    "@types/node": "^24.10.1",
+    "@typespec/compiler": "^1.6.0",
+    "typescript": "5.9"
+  }
+}
