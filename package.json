@@ -1,18 +1,34 @@
 {
   "name": "@omnidotdev/typespec-drizzle-emitter",
+  "description": "TypeSpec Drizzle schema emitter",
   "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
   "main": "build/src/index.js",
   "exports": {
     ".": {
       "types": "./build/src/index.d.ts",
       "default": "./build/src/index.js"
-    },
-    "./testing": {
-      "types": "./build/src/testing/index.d.ts",
-      "default": "./build/src/testing/index.js"
     }
   },
+  "homepage": "https://github.com/omnidotdev/typespec-drizzle-emitter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omnidotdev/typespec-drizzle-emitter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/omnidotdev/typespec-drizzle-emitter/issues"
+  },
+  "files": [
+    "build/"
+  ],
+  "keywords": [
+    "typespec",
+    "drizzle",
+    "emitter",
+    "tsp",
+    "codegen"
+  ],
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
