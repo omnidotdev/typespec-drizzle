@@ -1,7 +1,7 @@
 # TypeSpec Drizzle Emitter
 
 <div align="center">
-  <img src="/assets/omni-logo.png" width="350" />
+  <img src="/assets/logo.png" width="350" />
 
 [Join Omni community on Discord](https://discord.gg/omnidotdev)
 
