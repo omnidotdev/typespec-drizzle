@@ -30,7 +30,7 @@ This emitter allows you to define your database schema using TypeSpec's type-saf
 ## Installation
 
 ```sh
-bun add @omnidotdev/typespec-drizzle
+bun add -D @omnidotdev/typespec-drizzle
 ```
 
 ## Usage
