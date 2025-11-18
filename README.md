@@ -13,7 +13,8 @@
 
 A TypeSpec emitter that generates [Drizzle ORM](https://orm.drizzle.team) schema definitions and types from TypeSpec specifications.
 
-> [!IMPORTANT] > **Project Status:** 🚧 This project is **brand new**.
+> [!IMPORTANT]
+> **Project Status:** 🚧 This project is **brand new**. Use at your own risk.
 
 ## Overview
 
