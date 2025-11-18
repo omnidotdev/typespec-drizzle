@@ -7,8 +7,8 @@ import { createTester } from "@typespec/compiler/testing";
  * @see https://typespec.io/docs/extending-typespec/testing/#tester-api
  */
 export const DrizzleEmitterTester = createTester(
-	resolvePath(fileURLToPath(import.meta.url), "../../../../"),
-	{
-		libraries: ["@omnidotdev/typespec-drizzle"],
-	},
+  resolvePath(fileURLToPath(import.meta.url), "../../../../"),
+  {
+    libraries: ["@omnidotdev/typespec-drizzle"],
+  },
 ).importLibraries();

@@ -1,18 +1,18 @@
 {
-	"compilerOptions": {
-		"target": "es2022",
-		"useDefineForClassFields": true,
-		"module": "nodenext",
-		"moduleResolution": "nodenext",
-		"lib": ["es2022"],
-		"rootDir": ".",
-		"outDir": "build",
-		"baseUrl": "src",
-		"sourceMap": true,
-		"declaration": true,
-		"strict": true,
-		"skipLibCheck": true
-	},
-	"include": ["src"],
-	"exclude": ["src/test"]
+  "compilerOptions": {
+    "target": "es2022",
+    "useDefineForClassFields": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["es2022"],
+    "rootDir": ".",
+    "outDir": "build",
+    "baseUrl": "src",
+    "sourceMap": true,
+    "declaration": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["src/test"]
 }
