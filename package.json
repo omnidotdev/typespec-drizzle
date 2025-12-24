@@ -65,7 +65,7 @@
     "@typespec/compiler": "^1.7.1",
     "@typespec/emitter-framework": "^0.14.0",
     "husky": "^9.1.7",
-    "knip": "^5.77.0",
+    "knip": "^5.77.1",
     "typescript": "5.9.3"
   }
 }
