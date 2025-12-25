@@ -9,8 +9,13 @@
     ".": {
       "types": "./build/src/index.d.ts",
       "default": "./build/src/index.js"
+    },
+    "./testing": {
+      "types": "./build/src/testing/index.d.ts",
+      "default": "./build/src/testing/index.js"
     }
   },
+  "tspMain": "lib/main.tsp",
   "homepage": "https://github.com/omnidotdev/typespec-drizzle#readme",
   "repository": {
     "type": "git",
@@ -20,7 +25,8 @@
     "url": "https://github.com/omnidotdev/typespec-drizzle/issues"
   },
   "files": [
-    "build/"
+    "build/",
+    "lib/"
   ],
   "keywords": [
     "typespec",
@@ -32,9 +38,9 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "format": "biome format --write .",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
+    "lint": "biome lint",
+    "format": "biome format --write",
+    "check": "biome check",
     "knip": "knip-bun",
     "test": "bun test",
     "release": "bun run build && changeset publish",
@@ -43,17 +49,23 @@
     "prepare": "husky"
   },
   "peerDependencies": {
-    "@typespec/compiler": "^1.6.0"
+    "@typespec/compiler": "^1.6.0",
+    "@alloy-js/core": "^0.21.0",
+    "@alloy-js/typescript": "^0.21.0",
+    "@typespec/emitter-framework": "^0.13.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.6",
-    "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.29.7",
-    "@types/bun": "^1.3.2",
-    "@types/node": "^24.10.1",
-    "@typespec/compiler": "^1.6.0",
+    "@alloy-js/core": "^0.22.0",
+    "@alloy-js/typescript": "^0.22.0",
+    "@biomejs/biome": "2.3.10",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
+    "@types/bun": "^1.3.5",
+    "@types/node": "^25.0.3",
+    "@typespec/compiler": "^1.7.1",
+    "@typespec/emitter-framework": "^0.14.0",
     "husky": "^9.1.7",
-    "knip": "^5.69.1",
+    "knip": "^5.77.1",
     "typescript": "5.9.3"
   }
 }
