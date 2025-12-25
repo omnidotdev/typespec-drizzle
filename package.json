@@ -1,7 +1,7 @@
 {
   "name": "@omnidotdev/typespec-drizzle",
   "description": "TypeSpec Drizzle schema emitter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
   "main": "build/src/index.js",
