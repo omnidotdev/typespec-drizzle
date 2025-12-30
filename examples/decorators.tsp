@@ -50,8 +50,8 @@ model User {
   firstName?: string;
   lastName?: string;
   bio?: string;
-  status: UserStatus = "active";
-  role: UserRole = "user";
+  status: UserStatus = UserStatus.Active;
+  role: UserRole = UserRole.User;
   emailVerified: boolean = false;
 
   @index(#{ name: "idx_created_at" })
