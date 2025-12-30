@@ -8,11 +8,10 @@ import {
   AutoIncrementStateKey,
   CompositeIdStateKey,
   PrimaryKeyStateKey,
-  UuidOptionsStateKey,
   UuidStateKey,
 } from "../state/keys.js";
 
-import type { CompositeIdOptions, UuidOptions } from "../state/accessors.js";
+import type { CompositeIdOptions } from "../state/accessors.js";
 
 /**
  * Mark a property as the primary key, or define composite primary key on a model.
@@ -48,15 +47,11 @@ export const $autoIncrement = (
 };
 
 /**
- * Mark a column as UUID type with optional auto-generation.
+ * Mark a column as UUID type.
  */
 export const $uuid = (
   context: DecoratorContext,
   target: ModelProperty,
-  options?: UuidOptions,
 ): void => {
   context.program.stateSet(UuidStateKey).add(target);
-
-  if (options)
-    context.program.stateMap(UuidOptionsStateKey).set(target, options);
 };

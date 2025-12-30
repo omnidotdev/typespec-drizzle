@@ -6,7 +6,7 @@ export { $column, $map } from "./column.js";
 export { $id, $autoIncrement, $uuid } from "./keys.js";
 
 // constraints
-export { $unique, $index, $defaultValue, $sql } from "./constraints.js";
+export { $unique, $index } from "./constraints.js";
 
 // relationships
 export {

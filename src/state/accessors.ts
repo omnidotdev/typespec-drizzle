@@ -10,7 +10,6 @@ import {
   ColumnOptionsStateKey,
   CompositeIdStateKey,
   ConfigStateKey,
-  DefaultValueStateKey,
   IndexOptionsStateKey,
   IndexStateKey,
   JunctionStateKey,
@@ -22,12 +21,10 @@ import {
   PrimaryKeyStateKey,
   RelationOptionsStateKey,
   RelationStateKey,
-  SqlExpressionStateKey,
   TableOptionsStateKey,
   TableStateKey,
   UniqueOptionsStateKey,
   UniqueStateKey,
-  UuidOptionsStateKey,
   UuidStateKey,
 } from "./keys.js";
 
@@ -40,10 +37,6 @@ export interface TableOptions {
 
 export interface ColumnOptions {
   name?: string;
-}
-
-export interface UuidOptions {
-  defaultRandom?: boolean;
 }
 
 export interface IndexOptions {
@@ -193,17 +186,6 @@ export const isAutoIncrement = (
 export const isUuid = (program: Program, property: ModelProperty): boolean =>
   program.stateSet(UuidStateKey).has(property);
 
-/**
- * Get UUID options for a property.
- */
-export const getUuidOptions = (
-  program: Program,
-  property: ModelProperty,
-): UuidOptions | undefined =>
-  program.stateMap(UuidOptionsStateKey).get(property) as
-    | UuidOptions
-    | undefined;
-
 // constraint accessors
 
 /**
@@ -241,28 +223,6 @@ export const getIndexOptions = (
   program.stateMap(IndexOptionsStateKey).get(property) as
     | IndexOptions
     | undefined;
-
-/**
- * Get the default value for a property.
- */
-export const getDefaultValue = (
-  program: Program,
-  property: ModelProperty,
-): string | number | boolean | undefined =>
-  program.stateMap(DefaultValueStateKey).get(property) as
-    | string
-    | number
-    | boolean
-    | undefined;
-
-/**
- * Get the SQL expression for a property.
- */
-export const getSqlExpression = (
-  program: Program,
-  property: ModelProperty,
-): string | undefined =>
-  program.stateMap(SqlExpressionStateKey).get(property) as string | undefined;
 
 // relationship accessors
 

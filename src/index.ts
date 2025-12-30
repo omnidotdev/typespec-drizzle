@@ -18,8 +18,6 @@ export {
   $uuid,
   $unique,
   $index,
-  $defaultValue,
-  $sql,
   $oneToOne,
   $oneToMany,
   $manyToOne,

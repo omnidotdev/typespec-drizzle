@@ -5,14 +5,11 @@ import type {
 } from "@typespec/compiler";
 
 import {
-  DefaultValueStateKey,
   IndexOptionsStateKey,
   IndexStateKey,
-  SqlExpressionStateKey,
   UniqueOptionsStateKey,
   UniqueStateKey,
 } from "../state/keys.js";
-import { reportDiagnostic } from "../lib.js";
 
 import type { IndexOptions, UniqueOptions } from "../state/accessors.js";
 
@@ -46,46 +43,4 @@ export const $index = (
 
   if (options)
     context.program.stateMap(IndexOptionsStateKey).set(target, options);
-};
-
-/**
- * Set a default value for a column.
- */
-export const $defaultValue = (
-  context: DecoratorContext,
-  target: ModelProperty,
-  value: string | number | boolean,
-): void => {
-  if (value === undefined || value === null) {
-    reportDiagnostic(context.program, {
-      code: "invalid-default-value",
-      target,
-      format: { value: String(value), type: "unknown" },
-    });
-
-    return;
-  }
-
-  context.program.stateMap(DefaultValueStateKey).set(target, value);
-};
-
-/**
- * Use a raw SQL expression for default or computed values.
- */
-export const $sql = (
-  context: DecoratorContext,
-  target: ModelProperty,
-  expression: string,
-): void => {
-  if (!expression || expression.trim() === "") {
-    reportDiagnostic(context.program, {
-      code: "invalid-sql-expression",
-      target,
-      format: { expression },
-    });
-
-    return;
-  }
-
-  context.program.stateMap(SqlExpressionStateKey).set(target, expression);
 };

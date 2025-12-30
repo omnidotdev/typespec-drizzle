@@ -28,20 +28,6 @@ export const $lib = createTypeSpecLibrary({
       },
     },
 
-    // default & sql
-    "invalid-default-value": {
-      severity: "error",
-      messages: {
-        default: paramMessage`Invalid default value '${"value"}' for type '${"type"}'`,
-      },
-    },
-    "invalid-sql-expression": {
-      severity: "error",
-      messages: {
-        default: paramMessage`Invalid SQL expression: '${"expression"}'`,
-      },
-    },
-
     // relations
     "invalid-relation-config": {
       severity: "error",
@@ -73,8 +59,6 @@ export {
   $uuid,
   $unique,
   $index,
-  $defaultValue,
-  $sql,
   $oneToOne,
   $oneToMany,
   $manyToOne,
