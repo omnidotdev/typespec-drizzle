@@ -7,21 +7,21 @@ namespace Simple;
 @table(#{ name: "users" })
 model User {
   @id
-  id: string;
+  @uuid
+  id: string = Defaults.uuidv4;
 
   @unique
   email: string;
 
   name: string;
-
-  @defaultValue("now()")
-  createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table(#{ name: "posts" })
 model Post {
   @id
-  id: string;
+  @uuid
+  id: string = Defaults.uuidv4;
 
   title: string;
   content: string;
@@ -29,6 +29,5 @@ model Post {
   @manyToOne(#{ fields: "authorId", references: "id" })
   authorId: string;
 
-  @defaultValue("now()")
-  createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }

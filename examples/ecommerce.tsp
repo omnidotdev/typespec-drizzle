@@ -54,7 +54,7 @@ enum ShippingStatus {
 
 @table
 model Customer {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   @unique email: string;
   passwordHash: string;
   firstName: string;
@@ -67,13 +67,13 @@ model Customer {
   preferredLanguage?: string;
   preferredCurrency?: string;
   lastLoginAt?: utcDateTime;
-  @defaultValue("now()") registeredAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  registeredAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Address {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   customerId: string;
   type: string;
   firstName: string;
@@ -87,13 +87,13 @@ model Address {
   countryCode: string;
   phoneNumber?: string;
   isDefault: boolean;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Category {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   name: string;
   @unique slug: string;
   description?: string;
@@ -103,13 +103,13 @@ model Category {
   isActive: boolean;
   metaTitle?: string;
   metaDescription?: string;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Product {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   name: string;
   @unique slug: string;
   description?: string;
@@ -132,13 +132,13 @@ model Product {
   tags?: string;
   metaTitle?: string;
   metaDescription?: string;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model ProductVariant {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   productId: string;
   title: string;
   @unique sku: string;
@@ -151,31 +151,31 @@ model ProductVariant {
   inventoryAlert?: int32;
   allowBackorder: boolean;
   position: int32;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model ProductOption {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   productId: string;
   name: string;
   position: int32;
-  @defaultValue("now()") createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model ProductOptionValue {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   optionId: string;
   variantId: string;
   value: string;
-  @defaultValue("now()") createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model ProductImage {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   productId: string;
   variantId?: string;
   url: string;
@@ -183,33 +183,33 @@ model ProductImage {
   width?: int32;
   height?: int32;
   position: int32;
-  @defaultValue("now()") createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Cart {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   customerId?: string;
   sessionId?: string;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model CartItem {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   cartId: string;
   productId: string;
   variantId: string;
   quantity: int32;
   unitPrice: float64;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Order {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   @unique orderNumber: string;
   customerId: string;
   status: OrderStatus;
@@ -224,13 +224,13 @@ model Order {
   shippingAddress: string;
   notes?: string;
   placedAt: utcDateTime;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model OrderItem {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   orderId: string;
   productId: string;
   variantId: string;
@@ -240,12 +240,12 @@ model OrderItem {
   unitPrice: float64;
   quantity: int32;
   lineTotal: float64;
-  @defaultValue("now()") createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Payment {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   orderId: string;
   paymentMethod: string;
   gateway: string;
@@ -255,13 +255,13 @@ model Payment {
   status: PaymentStatus;
   gatewayResponse?: string;
   processedAt?: utcDateTime;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Shipment {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   orderId: string;
   carrier?: string;
   trackingNumber?: string;
@@ -273,13 +273,13 @@ model Shipment {
   shippedAt?: utcDateTime;
   estimatedDeliveryAt?: utcDateTime;
   deliveredAt?: utcDateTime;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Review {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   productId: string;
   customerId: string;
   title: string;
@@ -288,32 +288,32 @@ model Review {
   isVerifiedPurchase: boolean;
   isApproved: boolean;
   helpfulVotes: int32;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Wishlist {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   customerId: string;
   name: string;
   isPublic: boolean;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model WishlistItem {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   wishlistId: string;
   productId: string;
   variantId?: string;
-  @defaultValue("now()") addedAt: utcDateTime;
+  addedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Coupon {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   @unique code: string;
   description?: string;
   discountType: string;
@@ -326,18 +326,18 @@ model Coupon {
   isActive: boolean;
   validFrom: utcDateTime;
   validUntil?: utcDateTime;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model InventoryTransaction {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   variantId: string;
   type: string;
   quantityChange: int32;
   quantityAfter: int32;
   orderItemId?: string;
   notes?: string;
-  @defaultValue("now()") createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
