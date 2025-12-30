@@ -2,7 +2,7 @@ import "@omnidotdev/typespec-drizzle";
 
 using Drizzle;
 
-namespace EnumTest;
+namespace Enums;
 
 enum Status {
   Active: "active",
@@ -25,7 +25,5 @@ model Task {
   title: string;
   status: Status;
   priority: Priority;
-
-  @defaultValue("now()")
-  createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
