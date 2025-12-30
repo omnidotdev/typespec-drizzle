@@ -39,6 +39,7 @@ export const $table = (
       target,
       format: { name: options.schema },
     });
+
     return;
   }
 

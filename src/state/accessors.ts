@@ -28,8 +28,6 @@ import {
   UuidStateKey,
 } from "./keys.js";
 
-// type definitions
-
 export interface TableOptions {
   name?: string;
   schema?: string;
