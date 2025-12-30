@@ -5,6 +5,7 @@ import type {
   ModelProperty,
   Scalar,
   Type,
+  Value,
 } from "@typespec/compiler";
 import { navigateProgram } from "@typespec/compiler";
 
@@ -15,14 +16,11 @@ import { writeOutput } from "@typespec/emitter-framework";
 import {
   getColumnName,
   getCompositeId,
-  getDefaultValue,
   getIndexOptions,
   getRelationOptions,
-  getSqlExpression,
   getTableName,
   getTableOptions,
   getUniqueOptions,
-  getUuidOptions,
   isAutoIncrement,
   isIndexed,
   isJunction,
@@ -41,8 +39,6 @@ import type {
   ManyToManyOptions,
   RelationOptions,
 } from "./lib.js";
-
-// import tracker
 
 /**
  * Track imports needed for the generated Drizzle schema.
@@ -574,6 +570,73 @@ const generateFkActions = (
 };
 
 /**
+ * Get scalar name from a default value, walking up the scalar hierarchy.
+ */
+const getDefaultScalarName = (
+  defaultValue: Value | undefined,
+): string | null => {
+  if (!defaultValue) return null;
+
+  // handle `ScalarValue` (e.g. `= Drizzle.currentTimestamp`)
+  if (defaultValue.valueKind === "ScalarValue") {
+    const scalarValue = defaultValue as {
+      valueKind: "ScalarValue";
+      type: Scalar;
+      scalar: Scalar;
+    };
+
+    const scalar = scalarValue.scalar || scalarValue.type;
+
+    // check for custom scalars
+    if (
+      scalar.name === "currentTimestamp" ||
+      scalar.name === "uuidv4" ||
+      scalar.name === "uuidv7"
+    )
+      return scalar.name;
+
+    // walk up scalar hierarchy
+    if (scalar.baseScalar)
+      return getDefaultScalarName({
+        valueKind: "ScalarValue",
+        type: scalar.baseScalar,
+        scalar: scalar.baseScalar,
+      } as unknown as Value);
+  }
+
+  return null;
+};
+
+/**
+ * Extract the literal value from a TypeSpec `Value` type.
+ */
+const extractLiteralValue = (
+  value: Value | undefined,
+): string | number | boolean | null => {
+  if (!value) return null;
+
+  // handle string values
+  if (value.valueKind === "StringValue")
+    return (value as { valueKind: "StringValue"; value: string }).value;
+
+  // handle number values
+  if (value.valueKind === "NumericValue") {
+    const numValue = value as {
+      valueKind: "NumericValue";
+      value: { asNumber: () => number };
+    };
+
+    return numValue.value.asNumber();
+  }
+
+  // handle boolean values
+  if (value.valueKind === "BooleanValue")
+    return (value as { valueKind: "BooleanValue"; value: boolean }).value;
+
+  return null;
+};
+
+/**
  * Generate Drizzle column definition for a model property.
  */
 const generateDrizzleColumn = (
@@ -587,11 +650,12 @@ const generateDrizzleColumn = (
   const isPrimary = isPrimaryKey(context.program, property);
   const isAuto = isAutoIncrement(context.program, property);
   const hasUuid = isUuid(context.program, property);
-  const uuidOptions = getUuidOptions(context.program, property);
-  const defaultValue = getDefaultValue(context.program, property);
-  const sqlExpression = getSqlExpression(context.program, property);
   const isUniqueCol = isUnique(context.program, property);
   const uniqueOptions = getUniqueOptions(context.program, property);
+
+  // get native TypeSpec default value
+  const defaultScalar = getDefaultScalarName(property.defaultValue);
+  const defaultLiteral = extractLiteralValue(property.defaultValue);
 
   let drizzleType: string;
 
@@ -633,46 +697,42 @@ const generateDrizzleColumn = (
 
     if (isAuto) {
       columnDef += ".generatedAlwaysAsIdentity()";
-    } else if (hasUuid && uuidOptions?.defaultRandom) {
-      columnDef += ".defaultRandom()";
     }
   } else {
     if (!property.optional) columnDef += ".notNull()";
-
-    if (hasUuid && uuidOptions?.defaultRandom) columnDef += ".defaultRandom()";
   }
 
-  if (sqlExpression) {
-    imports.needsSql();
-    columnDef += `.default(sql\`${sqlExpression}\`)`;
-  } else if (defaultValue !== undefined) {
-    if (typeof defaultValue === "string") {
-      if (defaultValue === "now()" || defaultValue === "CURRENT_TIMESTAMP") {
+  // handle default values from native TypeSpec syntax
+  if (defaultScalar) {
+    // custom scalar defaults
+    switch (defaultScalar) {
+      case "currentTimestamp":
         columnDef += ".defaultNow()";
-      } else if (defaultValue.startsWith("'") && defaultValue.endsWith("'")) {
-        columnDef += `.default(${defaultValue})`;
-      } else if (/^\d+(\.\d+)?$/.test(defaultValue)) {
-        columnDef += `.default(${defaultValue})`;
-      } else if (defaultValue === "true" || defaultValue === "false") {
-        columnDef += `.default(${defaultValue})`;
-      } else {
-        imports.needsSql();
-        columnDef += `.default(sql\`${defaultValue}\`)`;
-      }
-    } else if (typeof defaultValue === "number") {
-      columnDef += `.default(${defaultValue})`;
-    } else if (typeof defaultValue === "boolean") {
-      columnDef += `.default(${defaultValue})`;
-    }
-  }
 
-  if (isUniqueCol) {
-    if (uniqueOptions?.name) {
-      columnDef += `.unique('${uniqueOptions.name}')`;
-    } else {
-      columnDef += ".unique()";
+        break;
+      case "uuidv4":
+        columnDef += ".defaultRandom()";
+
+        break;
+      case "uuidv7":
+        imports.needsSql();
+
+        columnDef += ".default(sql`uuidv7()`)";
+
+        break;
     }
-  }
+  } else if (defaultLiteral !== null)
+    if (typeof defaultLiteral === "string")
+      // literal defaults (string, number, boolean)
+      columnDef += `.default('${defaultLiteral}')`;
+    else if (typeof defaultLiteral === "number")
+      columnDef += `.default(${defaultLiteral})`;
+    else if (typeof defaultLiteral === "boolean")
+      columnDef += `.default(${defaultLiteral})`;
+
+  if (isUniqueCol)
+    if (uniqueOptions?.name) columnDef += `.unique('${uniqueOptions.name}')`;
+    else columnDef += ".unique()";
 
   return columnDef;
 };
