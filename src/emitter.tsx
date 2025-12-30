@@ -13,6 +13,8 @@ import { Output, SourceDirectory, SourceFile } from "@alloy-js/core";
 
 import { writeOutput } from "@typespec/emitter-framework";
 
+import { match } from "ts-pattern";
+
 import {
   getColumnName,
   getCompositeId,
@@ -703,25 +705,17 @@ const generateDrizzleColumn = (
   }
 
   // handle default values from native TypeSpec syntax
-  if (defaultScalar) {
-    // custom scalar defaults
-    switch (defaultScalar) {
-      case "currentTimestamp":
-        columnDef += ".defaultNow()";
-
-        break;
-      case "uuidv4":
-        columnDef += ".defaultRandom()";
-
-        break;
-      case "uuidv7":
+  if (defaultScalar)
+    columnDef += match(defaultScalar)
+      .with("currentTimestamp", () => ".defaultNow()")
+      .with("uuidv4", () => ".defaultRandom()")
+      .with("uuidv7", () => {
         imports.needsSql();
 
-        columnDef += ".default(sql`uuidv7()`)";
-
-        break;
-    }
-  } else if (defaultLiteral !== null)
+        return ".default(sql`uuidv7()`)";
+      })
+      .otherwise(() => "");
+  else if (defaultLiteral !== null)
     if (typeof defaultLiteral === "string")
       // literal defaults (string, number, boolean)
       columnDef += `.default('${defaultLiteral}')`;
