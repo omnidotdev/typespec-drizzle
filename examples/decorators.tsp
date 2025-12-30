@@ -11,7 +11,7 @@ using Drizzle;
  * To generate Drizzle schema:
  * npx tsp compile main.tsp --emit @omnidotdev/typespec-drizzle
  */
-namespace DecoratorsDemo;
+namespace Decorators;
 
 /** User status enumeration */
 enum UserStatus {

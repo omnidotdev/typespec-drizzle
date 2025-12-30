@@ -8,7 +8,7 @@ import "@omnidotdev/typespec-drizzle";
 
 using Drizzle;
 
-namespace ECommerce;
+namespace Ecommerce;
 
 enum CustomerStatus {
   Active: "active",

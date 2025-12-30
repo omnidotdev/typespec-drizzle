@@ -8,7 +8,7 @@ import "@omnidotdev/typespec-drizzle";
 
 using Drizzle;
 
-namespace BlogApp;
+namespace Blog;
 
 enum UserStatus {
   Active: "active",
