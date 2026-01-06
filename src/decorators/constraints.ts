@@ -1,9 +1,3 @@
-import type {
-  DecoratorContext,
-  Model,
-  ModelProperty,
-} from "@typespec/compiler";
-
 import {
   IndexOptionsStateKey,
   IndexStateKey,
@@ -11,6 +5,11 @@ import {
   UniqueStateKey,
 } from "../state/keys.js";
 
+import type {
+  DecoratorContext,
+  Model,
+  ModelProperty,
+} from "@typespec/compiler";
 import type { IndexOptions, UniqueOptions } from "../state/accessors.js";
 
 /**

@@ -1,10 +1,3 @@
-import type {
-  Model,
-  ModelProperty,
-  Namespace,
-  Program,
-} from "@typespec/compiler";
-
 import {
   AutoIncrementStateKey,
   ColumnOptionsStateKey,
@@ -27,6 +20,13 @@ import {
   UniqueStateKey,
   UuidStateKey,
 } from "./keys.js";
+
+import type {
+  Model,
+  ModelProperty,
+  Namespace,
+  Program,
+} from "@typespec/compiler";
 
 export interface TableOptions {
   name?: string;

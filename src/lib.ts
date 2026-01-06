@@ -50,22 +50,21 @@ export const { reportDiagnostic, createDiagnostic } = $lib;
 
 // re-export all decorators
 export {
-  $table,
-  $junction,
-  $column,
-  $map,
-  $id,
   $autoIncrement,
-  $uuid,
-  $unique,
-  $index,
-  $oneToOne,
-  $oneToMany,
-  $manyToOne,
-  $manyToMany,
-  $relation,
+  $column,
   $config,
+  $id,
+  $index,
+  $junction,
+  $manyToMany,
+  $manyToOne,
+  $map,
+  $oneToMany,
+  $oneToOne,
+  $relation,
+  $table,
+  $unique,
+  $uuid,
 } from "./decorators/index.js";
-
 // re-export state accessors for use in emitter
 export * from "./state/index.js";

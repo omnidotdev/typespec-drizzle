@@ -1,4 +1,5 @@
-import { describe, it, expect } from "bun:test";
+import { describe, expect, it } from "bun:test";
+
 import { DrizzleEmitterTester } from "./__fixtures__/drizzleEmitter.tester.js";
 
 describe("TypeSpec Drizzle emitter fixtures", () => {

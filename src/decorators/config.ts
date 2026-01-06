@@ -1,7 +1,6 @@
-import type { DecoratorContext, Namespace } from "@typespec/compiler";
-
 import { ConfigStateKey } from "../state/keys.js";
 
+import type { DecoratorContext, Namespace } from "@typespec/compiler";
 import type { Configuration } from "../state/accessors.js";
 
 /**

@@ -1,18 +1,6 @@
-import type {
-  EmitContext,
-  Enum,
-  Model,
-  ModelProperty,
-  Scalar,
-  Type,
-  Value,
-} from "@typespec/compiler";
-import { navigateProgram } from "@typespec/compiler";
-
 import { Output, SourceDirectory, SourceFile } from "@alloy-js/core";
-
+import { navigateProgram } from "@typespec/compiler";
 import { writeOutput } from "@typespec/emitter-framework";
-
 import { match } from "ts-pattern";
 
 import {
@@ -36,6 +24,15 @@ import {
   isUuid,
 } from "./lib.js";
 
+import type {
+  EmitContext,
+  Enum,
+  Model,
+  ModelProperty,
+  Scalar,
+  Type,
+  Value,
+} from "@typespec/compiler";
 import type {
   ForeignKeyAction,
   ManyToManyOptions,

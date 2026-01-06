@@ -1,8 +1,9 @@
-import type { TypeSpecTestLibrary } from "@typespec/compiler/testing";
 import {
   createTestLibrary,
   findTestPackageRoot,
 } from "@typespec/compiler/testing";
+
+import type { TypeSpecTestLibrary } from "@typespec/compiler/testing";
 
 /**
  * Test library.

@@ -1,5 +1,4 @@
-import type { DecoratorContext, ModelProperty } from "@typespec/compiler";
-
+import { reportDiagnostic } from "../lib.js";
 import {
   ManyToManyStateKey,
   ManyToOneStateKey,
@@ -8,8 +7,8 @@ import {
   RelationOptionsStateKey,
   RelationStateKey,
 } from "../state/keys.js";
-import { reportDiagnostic } from "../lib.js";
 
+import type { DecoratorContext, ModelProperty } from "@typespec/compiler";
 import type { ManyToManyOptions, RelationOptions } from "../state/accessors.js";
 
 /**

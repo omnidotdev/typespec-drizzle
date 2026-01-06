@@ -1,9 +1,3 @@
-import type {
-  DecoratorContext,
-  Model,
-  ModelProperty,
-} from "@typespec/compiler";
-
 import {
   AutoIncrementStateKey,
   CompositeIdStateKey,
@@ -11,6 +5,11 @@ import {
   UuidStateKey,
 } from "../state/keys.js";
 
+import type {
+  DecoratorContext,
+  Model,
+  ModelProperty,
+} from "@typespec/compiler";
 import type { CompositeIdOptions } from "../state/accessors.js";
 
 /**

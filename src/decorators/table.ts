@@ -1,12 +1,11 @@
-import type { DecoratorContext, Model } from "@typespec/compiler";
-
+import { reportDiagnostic } from "../lib.js";
 import {
   JunctionStateKey,
   TableOptionsStateKey,
   TableStateKey,
 } from "../state/keys.js";
-import { reportDiagnostic } from "../lib.js";
 
+import type { DecoratorContext, Model } from "@typespec/compiler";
 import type { TableOptions } from "../state/accessors.js";
 
 /**
