@@ -582,9 +582,22 @@ const getDefaultScalarName = (
       valueKind: "ScalarValue";
       type: Scalar;
       scalar: Scalar;
+      value: { name: string; args: unknown[] };
     };
 
     const scalar = scalarValue.scalar || scalarValue.type;
+
+    // check for `now()` initializer on date/time scalars (e.g. `utcDateTime.now()`)
+    if (scalarValue.value?.name === "now") {
+      const scalarName = scalar.name;
+      if (
+        scalarName === "utcDateTime" ||
+        scalarName === "offsetDateTime" ||
+        scalarName === "plainDate" ||
+        scalarName === "plainTime"
+      )
+        return "dateTimeNow";
+    }
 
     // check for custom scalars
     if (
@@ -705,6 +718,7 @@ const generateDrizzleColumn = (
   if (defaultScalar)
     columnDef += match(defaultScalar)
       .with("currentTimestamp", () => ".defaultNow()")
+      .with("dateTimeNow", () => ".defaultNow()")
       .with("uuidv4", () => ".defaultRandom()")
       .with("uuidv7", () => {
         imports.needsSql();
