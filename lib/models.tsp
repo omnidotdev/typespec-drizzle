@@ -20,14 +20,6 @@ model ColumnOptions {
 }
 
 /**
- * Options for the @uuid decorator
- */
-model UuidOptions {
-  /** Generate a random UUID as default value */
-  defaultRandom?: boolean;
-}
-
-/**
  * Options for the @index decorator
  */
 model IndexOptions {

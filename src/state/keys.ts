@@ -29,9 +29,6 @@ export const AutoIncrementStateKey = Symbol.for(
   "@omnidotdev/typespec-drizzle:auto-increment",
 );
 export const UuidStateKey = Symbol.for("@omnidotdev/typespec-drizzle:uuid");
-export const UuidOptionsStateKey = Symbol.for(
-  "@omnidotdev/typespec-drizzle:uuid-options",
-);
 
 // constraints
 export const UniqueStateKey = Symbol.for("@omnidotdev/typespec-drizzle:unique");
@@ -41,12 +38,6 @@ export const UniqueOptionsStateKey = Symbol.for(
 export const IndexStateKey = Symbol.for("@omnidotdev/typespec-drizzle:index");
 export const IndexOptionsStateKey = Symbol.for(
   "@omnidotdev/typespec-drizzle:index-options",
-);
-export const DefaultValueStateKey = Symbol.for(
-  "@omnidotdev/typespec-drizzle:default-value",
-);
-export const SqlExpressionStateKey = Symbol.for(
-  "@omnidotdev/typespec-drizzle:sql-expression",
 );
 
 // relationships
@@ -91,15 +82,12 @@ export const StateKeys = {
   compositeId: CompositeIdStateKey,
   autoIncrement: AutoIncrementStateKey,
   uuid: UuidStateKey,
-  uuidOptions: UuidOptionsStateKey,
 
   // constraints
   unique: UniqueStateKey,
   uniqueOptions: UniqueOptionsStateKey,
   index: IndexStateKey,
   indexOptions: IndexOptionsStateKey,
-  defaultValue: DefaultValueStateKey,
-  sqlExpression: SqlExpressionStateKey,
 
   // relationships
   oneToOne: OneToOneStateKey,

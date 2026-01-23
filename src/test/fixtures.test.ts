@@ -1,4 +1,5 @@
-import { describe, it, expect } from "bun:test";
+import { describe, expect, it } from "bun:test";
+
 import { DrizzleEmitterTester } from "./__fixtures__/drizzleEmitter.tester.js";
 
 describe("TypeSpec Drizzle emitter fixtures", () => {
@@ -55,6 +56,77 @@ describe("TypeSpec Drizzle emitter fixtures", () => {
           optionalDescription?: string;
           requiredCreatedAt: utcDateTime;
           optionalUpdatedAt?: utcDateTime;
+        }
+      `);
+
+      expect(true).toBe(true);
+    });
+  });
+
+  describe("default values", () => {
+    it("handles utcDateTime.now() default", async () => {
+      await DrizzleEmitterTester.compile(`
+        model Record {
+          id: string;
+          createdAt: utcDateTime = utcDateTime.now();
+          updatedAt: utcDateTime = utcDateTime.now();
+        }
+      `);
+
+      expect(true).toBe(true);
+    });
+
+    it("handles plainDate.now() default", async () => {
+      await DrizzleEmitterTester.compile(`
+        model Event {
+          id: string;
+          date: plainDate = plainDate.now();
+        }
+      `);
+
+      expect(true).toBe(true);
+    });
+
+    it("handles plainTime.now() default", async () => {
+      await DrizzleEmitterTester.compile(`
+        model Schedule {
+          id: string;
+          time: plainTime = plainTime.now();
+        }
+      `);
+
+      expect(true).toBe(true);
+    });
+
+    it("handles offsetDateTime.now() default", async () => {
+      await DrizzleEmitterTester.compile(`
+        model Appointment {
+          id: string;
+          scheduledAt: offsetDateTime = offsetDateTime.now();
+        }
+      `);
+
+      expect(true).toBe(true);
+    });
+
+    it("handles Drizzle.Defaults.currentTimestamp default", async () => {
+      await DrizzleEmitterTester.compile(`
+        model User {
+          id: string;
+          createdAt: utcDateTime = Defaults.currentTimestamp;
+          updatedAt: utcDateTime = Defaults.currentTimestamp;
+        }
+      `);
+
+      expect(true).toBe(true);
+    });
+
+    it("handles mixed now() and Drizzle defaults", async () => {
+      await DrizzleEmitterTester.compile(`
+        model MixedDefaults {
+          id: string = Defaults.uuidv4;
+          createdAt: utcDateTime = utcDateTime.now();
+          updatedAt: utcDateTime = Defaults.currentTimestamp;
         }
       `);
 

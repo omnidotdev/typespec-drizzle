@@ -11,7 +11,7 @@ using Drizzle;
  * To generate Drizzle schema:
  * npx tsp compile main.tsp --emit @omnidotdev/typespec-drizzle
  */
-namespace DecoratorsDemo;
+namespace Decorators;
 
 /** User status enumeration */
 enum UserStatus {
@@ -31,8 +31,9 @@ enum UserRole {
 @table(#{ name: "users", schema: "public" })
 model User {
   @id
+  @uuid
   @column(#{ name: "user_id" })
-  id: string;
+  id: string = Defaults.uuidv4;
 
   @unique
   @index(#{ name: "idx_username" })
@@ -45,35 +46,26 @@ model User {
   @column(#{ name: "password_hash" })
   passwordHash: string;
 
-  @defaultValue("'User'")
-  displayName: string;
-
+  displayName: string = "User";
   firstName?: string;
   lastName?: string;
   bio?: string;
+  status: UserStatus = UserStatus.Active;
+  role: UserRole = UserRole.User;
+  emailVerified: boolean = false;
 
-  @defaultValue("'active'")
-  status: UserStatus;
-
-  @defaultValue("'user'")
-  role: UserRole;
-
-  @defaultValue("false")
-  emailVerified: boolean;
-
-  @defaultValue("now()")
   @index(#{ name: "idx_created_at" })
-  createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 
-  @defaultValue("now()")
-  updatedAt: utcDateTime;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 /** Profile model with one-to-one relationship */
 @table(#{ name: "user_profiles" })
 model UserProfile {
   @id
-  id: string;
+  @uuid
+  id: string = Defaults.uuidv4;
 
   @oneToOne(#{ fields: "userId", references: "id" })
   @unique
@@ -83,19 +75,16 @@ model UserProfile {
   bio?: string;
   website?: string;
   location?: string;
-
-  @defaultValue("now()")
-  createdAt: utcDateTime;
-
-  @defaultValue("now()")
-  updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 /** Category model */
 @table(#{ name: "categories" })
 model Category {
   @id
-  id: string;
+  @uuid
+  id: string = Defaults.uuidv4;
 
   @unique
   name: string;
@@ -105,31 +94,23 @@ model Category {
   slug: string;
 
   description?: string;
-
-  @defaultValue("'#000000'")
-  color: string;
+  color: string = "#000000";
 
   @manyToOne(#{ fields: "parentId", references: "id" })
   parentId?: string;
 
-  @defaultValue("0")
-  sortOrder: int32;
-
-  @defaultValue("true")
-  isActive: boolean;
-
-  @defaultValue("now()")
-  createdAt: utcDateTime;
-
-  @defaultValue("now()")
-  updatedAt: utcDateTime;
+  sortOrder: int32 = 0;
+  isActive: boolean = true;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 /** Tag model for many-to-many relationships */
 @table(#{ name: "tags" })
 model Tag {
   @id
-  id: string;
+  @uuid
+  id: string = Defaults.uuidv4;
 
   @unique
   name: string;
@@ -138,22 +119,17 @@ model Tag {
   slug: string;
 
   description?: string;
-
-  @defaultValue("'#007acc'")
-  color: string;
-
-  @defaultValue("0")
-  usageCount: int32;
-
-  @defaultValue("now()")
-  createdAt: utcDateTime;
+  color: string = "#007acc";
+  usageCount: int32 = 0;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 /** Post model with various relationships */
 @table(#{ name: "posts" })
 model Post {
   @id
-  id: string;
+  @uuid
+  id: string = Defaults.uuidv4;
 
   title: string;
 
@@ -170,28 +146,14 @@ model Post {
   @manyToOne(#{ fields: "categoryId", references: "id" })
   categoryId?: string;
 
-  @defaultValue("'draft'")
-  status: string;
-
-  @defaultValue("true")
-  allowComments: boolean;
-
-  @defaultValue("false")
-  isFeatured: boolean;
-
-  @defaultValue("0")
-  viewCount: int32;
-
-  @defaultValue("0")
-  likeCount: int32;
-
+  status: string = "draft";
+  allowComments: boolean = true;
+  isFeatured: boolean = false;
+  viewCount: int32 = 0;
+  likeCount: int32 = 0;
   publishedAt?: utcDateTime;
-
-  @defaultValue("now()")
-  createdAt: utcDateTime;
-
-  @defaultValue("now()")
-  updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 /** Junction table for post-tag many-to-many relationship */
@@ -199,7 +161,8 @@ model Post {
 @table(#{ name: "post_tags" })
 model PostTag {
   @id
-  id: string;
+  @uuid
+  id: string = Defaults.uuidv4;
 
   @manyToOne(#{ fields: "postId", references: "id" })
   postId: string;
@@ -207,15 +170,15 @@ model PostTag {
   @manyToOne(#{ fields: "tagId", references: "id" })
   tagId: string;
 
-  @defaultValue("now()")
-  createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 /** Comment model with self-referencing relationship */
 @table(#{ name: "comments" })
 model Comment {
   @id
-  id: string;
+  @uuid
+  id: string = Defaults.uuidv4;
 
   content: string;
 
@@ -228,20 +191,11 @@ model Comment {
   @manyToOne(#{ fields: "parentCommentId", references: "id" })
   parentCommentId?: string;
 
-  @defaultValue("false")
-  isApproved: boolean;
-
-  @defaultValue("false")
-  isSpam: boolean;
-
-  @defaultValue("0")
-  likeCount: int32;
-
-  @defaultValue("now()")
-  createdAt: utcDateTime;
-
-  @defaultValue("now()")
-  updatedAt: utcDateTime;
+  isApproved: boolean = false;
+  isSpam: boolean = false;
+  likeCount: int32 = 0;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 /** Settings model with unique constraints */
@@ -252,20 +206,11 @@ model SiteSetting {
   key: string;
 
   value: string;
-
-  @defaultValue("'string'")
-  valueType: string;
-
+  valueType: string = "string";
   description?: string;
-
-  @defaultValue("false")
-  isPublic: boolean;
-
-  @defaultValue("'general'")
-  settingsGroup: string;
-
-  @defaultValue("now()")
-  updatedAt: utcDateTime;
+  isPublic: boolean = false;
+  settingsGroup: string = "general";
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 /** Analytics model with indexes */
@@ -294,7 +239,6 @@ model PageView {
   countryCode?: string;
   deviceType?: string;
 
-  @defaultValue("now()")
   @index(#{ name: "idx_viewed_at" })
-  viewedAt: utcDateTime;
+  viewedAt: utcDateTime = Defaults.currentTimestamp;
 }

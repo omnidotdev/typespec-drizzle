@@ -28,20 +28,6 @@ export const $lib = createTypeSpecLibrary({
       },
     },
 
-    // default & sql
-    "invalid-default-value": {
-      severity: "error",
-      messages: {
-        default: paramMessage`Invalid default value '${"value"}' for type '${"type"}'`,
-      },
-    },
-    "invalid-sql-expression": {
-      severity: "error",
-      messages: {
-        default: paramMessage`Invalid SQL expression: '${"expression"}'`,
-      },
-    },
-
     // relations
     "invalid-relation-config": {
       severity: "error",
@@ -64,24 +50,21 @@ export const { reportDiagnostic, createDiagnostic } = $lib;
 
 // re-export all decorators
 export {
-  $table,
-  $junction,
-  $column,
-  $map,
-  $id,
   $autoIncrement,
-  $uuid,
-  $unique,
-  $index,
-  $defaultValue,
-  $sql,
-  $oneToOne,
-  $oneToMany,
-  $manyToOne,
-  $manyToMany,
-  $relation,
+  $column,
   $config,
+  $id,
+  $index,
+  $junction,
+  $manyToMany,
+  $manyToOne,
+  $map,
+  $oneToMany,
+  $oneToOne,
+  $relation,
+  $table,
+  $unique,
+  $uuid,
 } from "./decorators/index.js";
-
 // re-export state accessors for use in emitter
 export * from "./state/index.js";

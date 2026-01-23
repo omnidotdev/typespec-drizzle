@@ -86,16 +86,19 @@ extern dec id(
 extern dec autoIncrement(target: ModelProperty);
 
 /**
- * Mark a column as UUID type with optional auto-generation.
+ * Mark a column as UUID type.
  *
- * @param options UUID options (defaultRandom for auto-generation).
+ * Use with native default syntax for auto-generation:
+ * - `= Drizzle.uuidv4` for random UUIDs (gen_random_uuid())
+ * - `= Drizzle.uuidv7` for time-ordered UUIDs (PostgreSQL 18+)
+ *
  * @example
  * ```tsp
- * @id @uuid({ defaultRandom: true })
- * id: string;
+ * @id @uuid
+ * id: string = Drizzle.uuidv4;
  * ```
  */
-extern dec uuid(target: ModelProperty, options?: valueof UuidOptions);
+extern dec uuid(target: ModelProperty);
 
 // constraint decorators
 
@@ -134,39 +137,6 @@ extern dec unique(
  * ```
  */
 extern dec index(target: ModelProperty, options?: valueof IndexOptions);
-
-/**
- * Set a default value for a column.
- *
- * @param value Default value (literal or SQL expression like "now()").
- * @example
- * ```tsp
- * @defaultValue(true)
- * isActive: boolean;
- *
- * @defaultValue("now()")
- * createdAt: utcDateTime;
- * ```
- */
-extern dec defaultValue(
-  target: ModelProperty,
-  value: valueof string | int32 | boolean
-);
-
-/**
- * Use a raw SQL expression for default or computed values.
- *
- * @param expression SQL expression.
- * @example
- * ```tsp
- * @sql("gen_random_uuid()")
- * id: string;
- *
- * @sql("CURRENT_TIMESTAMP")
- * createdAt: utcDateTime;
- * ```
- */
-extern dec sql(target: ModelProperty, expression: valueof string);
 
 // relationship decorators
 

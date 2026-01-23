@@ -8,7 +8,7 @@ import "@omnidotdev/typespec-drizzle";
 
 using Drizzle;
 
-namespace BlogApp;
+namespace Blog;
 
 enum UserStatus {
   Active: "active",
@@ -39,7 +39,7 @@ enum PostVisibility {
 
 @table
 model User {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   @unique username: string;
   @unique email: string;
   passwordHash: string;
@@ -55,13 +55,13 @@ model User {
   emailVerified: boolean;
   failedLoginAttempts: int32;
   lastLoginAt?: utcDateTime;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Category {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   name: string;
   @unique slug: string;
   description?: string;
@@ -69,24 +69,24 @@ model Category {
   parentId?: string;
   sortOrder: int32;
   isActive: boolean;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Tag {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   name: string;
   @unique slug: string;
   description?: string;
   color?: string;
   usageCount: int32;
-  @defaultValue("now()") createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Post {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   title: string;
   @unique slug: string;
   excerpt?: string;
@@ -109,22 +109,22 @@ model Post {
   readingTime?: int32;
   scheduledAt?: utcDateTime;
   publishedAt?: utcDateTime;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 @junction
 model PostTag {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   postId: string;
   tagId: string;
-  @defaultValue("now()") createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Comment {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   content: string;
   postId: string;
   authorId: string;
@@ -138,13 +138,13 @@ model Comment {
   isEdited: boolean;
   likeCount: int32;
   userAgent?: string;
-  @defaultValue("now()") createdAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Media {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   originalFilename: string;
   storedFilename: string;
   mimeType: string;
@@ -158,23 +158,23 @@ model Media {
   thumbnailUrl?: string;
   uploadedById: string;
   isUsed: boolean;
-  @defaultValue("now()") uploadedAt: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  uploadedAt: utcDateTime = Defaults.currentTimestamp;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 @junction
 model PostMedia {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   postId: string;
   mediaId: string;
   sortOrder: int32;
-  @defaultValue("now()") createdAt: utcDateTime;
+  createdAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model Subscriber {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   @unique email: string;
   name?: string;
   isActive: boolean;
@@ -182,9 +182,9 @@ model Subscriber {
   verificationToken?: string;
   unsubscribeToken: string;
   preferences?: string;
-  @defaultValue("now()") subscribedAt: utcDateTime;
+  subscribedAt: utcDateTime = Defaults.currentTimestamp;
   verifiedAt?: utcDateTime;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
@@ -195,12 +195,12 @@ model SiteConfig {
   description?: string;
   isPublic: boolean;
   group?: string;
-  @defaultValue("now()") updatedAt: utcDateTime;
+  updatedAt: utcDateTime = Defaults.currentTimestamp;
 }
 
 @table
 model PageView {
-  @id id: string;
+  @id @uuid id: string = Defaults.uuidv4;
   path: string;
   postId?: string;
   userId?: string;
@@ -210,5 +210,5 @@ model PageView {
   referrer?: string;
   countryCode?: string;
   deviceType?: string;
-  @defaultValue("now()") viewedAt: utcDateTime;
+  viewedAt: utcDateTime = Defaults.currentTimestamp;
 }

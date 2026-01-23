@@ -1,6 +1,8 @@
-import type { Diagnostic } from "@typespec/compiler";
 import { createTestHost, createTestWrapper } from "@typespec/compiler/testing";
+
 import { DrizzleTestLibrary } from "../../testing/index.js";
+
+import type { Diagnostic } from "@typespec/compiler";
 
 /**
  * Drizzle emitter tester. Functionally serves as a test fixture.
