@@ -7,7 +7,7 @@
 
 [![version](https://img.shields.io/github/v/release/omnidotdev/typespec-drizzle?sort=semver)](https://github.com/omnidotdev/typespec-drizzle/releases)
 [![build](https://img.shields.io/github/actions/workflow/status/omnidotdev/typespec-drizzle/release.yml)](https://github.com/omnidotdev/typespec-drizzle/actions/workflows/release.yml)
-[![license: MIT](https://img.shields.io/github/license/omnidotdev/typespec-drizzle)](https://github.com/omnidotdev/typespec-drizzle/blob/master/LICENSE.md)
+[![license: Apache 2.0](https://img.shields.io/github/license/omnidotdev/typespec-drizzle)](https://github.com/omnidotdev/typespec-drizzle/blob/master/LICENSE.md)
 
 </div>
 
