@@ -67,6 +67,6 @@
     "husky": "^9.1.7",
     "knip": "^5.82.1",
     "ts-pattern": "^5.9.0",
-    "typescript": "5.9.3"
+    "typescript": "6.0.3"
   }
 }
