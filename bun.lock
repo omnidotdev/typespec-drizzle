@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "@omnidotdev/typespec-drizzle",
+      "dependencies": {
+        "ts-pattern": "^5.9.0",
+      },
       "devDependencies": {
         "@alloy-js/core": "^0.22.0",
         "@alloy-js/typescript": "^0.22.0",
@@ -16,7 +19,6 @@
         "@typespec/emitter-framework": "^0.15.0",
         "husky": "^9.1.7",
         "knip": "^5.82.1",
-        "ts-pattern": "^5.9.0",
         "typescript": "5.9.3",
       },
       "peerDependencies": {

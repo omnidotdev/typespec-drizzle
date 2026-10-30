@@ -29,6 +29,7 @@ import type {
   Enum,
   Model,
   ModelProperty,
+  Namespace,
   Scalar,
   Type,
   Value,
@@ -158,6 +159,24 @@ interface Relationship {
 // model utilities
 
 /**
+ * Whether a namespace is, or is nested under, a built-in namespace whose types
+ * must never be emitted. The ancestry is walked because library types live in
+ * sub-namespaces (e.g. TypeSpec.Http) whose own name is not "TypeSpec", so a
+ * check against only the immediate namespace name lets those types leak through
+ */
+const isBuiltInNamespace = (ns: Namespace | undefined): boolean => {
+  for (let current = ns; current; current = current.namespace) {
+    if (
+      current.name === "TypeSpec" ||
+      current.name === "Reflection" ||
+      current.name === "Drizzle"
+    )
+      return true;
+  }
+  return false;
+};
+
+/**
  * Check if a model is a built-in TypeSpec model.
  */
 const isBuiltInTypeSpecModel = (model: Model): boolean => {
@@ -202,7 +221,7 @@ const getAllModels = (context: EmitContext): Model[] => {
       if (
         !model.name.startsWith("_") &&
         !isBuiltInTypeSpecModel(model) &&
-        !model.namespace?.name?.startsWith("TypeSpec") &&
+        !isBuiltInNamespace(model.namespace) &&
         isTable(context.program, model)
       )
         models.push(model);
@@ -220,12 +239,7 @@ const getAllEnums = (context: EmitContext): Enum[] => {
 
   navigateProgram(context.program, {
     enum(en) {
-      if (
-        en.namespace?.name !== "TypeSpec" &&
-        en.namespace?.name !== "Drizzle" &&
-        en.namespace?.name !== "Reflection"
-      )
-        enums.push(en);
+      if (!isBuiltInNamespace(en.namespace)) enums.push(en);
     },
   });
 
