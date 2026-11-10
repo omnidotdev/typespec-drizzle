@@ -7,5 +7,3 @@ on:
 jobs:
   checks:
     uses: omnidotdev/.github/.github/workflows/pr-checks.yml@master
-    with:
-      require-changeset: false
