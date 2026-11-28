@@ -15,4 +15,5 @@ jobs:
       pull-requests: write
       statuses: write
     secrets:
-      GH_PAT: ${{ secrets.GH_PAT }}
+      CLA_APP_CLIENT_ID: ${{ secrets.CLA_APP_CLIENT_ID }}
+      CLA_APP_PRIVATE_KEY: ${{ secrets.CLA_APP_PRIVATE_KEY }}
